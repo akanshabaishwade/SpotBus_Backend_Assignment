@@ -3,6 +3,10 @@ from .serializer import RegisterSerializer, UserSerializer
 from rest_framework.response import Response
 from rest_framework import generics
 import json
+from rest_framework import viewsets
+from .models import *
+from .serializer import *
+
 
 
 # Register API
@@ -44,3 +48,9 @@ class ProfileView(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+
+class SchoolApi(viewsets.ModelViewSet):
+    queryset = School.objects.all()
+    serializer_class = SchoolSerializer

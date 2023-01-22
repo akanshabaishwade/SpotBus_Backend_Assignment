@@ -7,5 +7,7 @@ urlpatterns = [
     path('register/', RegisterApi.as_view()),
     path('login/', LoginView.as_view()),
     path('profile/', ProfileView.as_view()),
+    path('schoolapi/', SchoolApi.as_view({'get': 'list', 'post': 'create'})),
+
 
 ]

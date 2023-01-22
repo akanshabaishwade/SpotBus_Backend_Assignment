@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
-
+from .models import *
 
 # Register serializer
 class RegisterSerializer(serializers.ModelSerializer):
@@ -83,3 +83,8 @@ class UserSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
         ]
+
+class SchoolSerializer(serializers.Serializer):
+    class Meta:
+        model = School
+        fields = "__all__"
