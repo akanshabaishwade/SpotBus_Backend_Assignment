@@ -84,7 +84,7 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
 
-class SchoolSerializer(serializers.HyperlinkedModelSerializer):
+class SchoolSerializer(serializers.Serializer):
     class Meta:
         model = School
         fields = [
