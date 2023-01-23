@@ -2,7 +2,6 @@ from rest_framework.decorators import api_view
 from .serializer import RegisterSerializer, UserSerializer
 from rest_framework.response import Response
 from rest_framework import generics
-import json
 from rest_framework import viewsets
 from .models import *
 from .serializer import *
@@ -43,7 +42,9 @@ class LoginView(views.APIView):
         login(request, user)
         return Response(None, status=status.HTTP_202_ACCEPTED)
 
-class ProfileView(generics.RetrieveAPIView):
+
+
+class ProfileViewApi(generics.RetrieveAPIView):
     serializer_class = UserSerializer
 
     def get_object(self):
@@ -51,6 +52,29 @@ class ProfileView(generics.RetrieveAPIView):
 
 
 
+class StopsApi(viewsets.ModelViewSet):
+    queryset = Stops.objects.all()
+    serializer_class = StopsSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        serializer.save(created_by=user)
+
+    def perform_update(self, serializer):
+        user = self.request.user
+        serializer.save(last_updated_by=user)
+
+
 class SchoolApi(viewsets.ModelViewSet):
-    queryset = School.objects.all()
+    queryset = School.objects.all().order_by('-updated_at') #for data with shorting
     serializer_class = SchoolSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        serializer.save(created_by=user)
+
+    def perform_update(self, serializer):
+        user = self.request.user
+        serializer.save(last_updated_by=user)

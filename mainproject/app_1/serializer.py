@@ -1,21 +1,26 @@
-from rest_framework import  serializers
+from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 from .models import *
+from django.contrib.auth import authenticate
 
 # Register serializer
+
+
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id','username','password','first_name', 'last_name')
+        fields = ('id', 'username', 'password', 'first_name', 'last_name')
         extra_kwargs = {
-            'password':{'write_only': True},
+            'password': {'write_only': True},
         }
+
         def create(self, validated_data):
-            user = User.objects.create_user(validated_data['username'],     password = validated_data['password']  ,first_name=validated_data['first_name'],  last_name=validated_data['last_name'])
+            user = User.objects.create_user(validated_data['username'],     password=validated_data['password'],
+                                            first_name=validated_data['first_name'],  last_name=validated_data['last_name'])
             return user
 
 
@@ -24,11 +29,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-
-from django.contrib.auth import authenticate
-
-from rest_framework import serializers
-
 
 
 class LoginSerializer(serializers.Serializer):
@@ -71,7 +71,6 @@ class LoginSerializer(serializers.Serializer):
         attrs['user'] = user
         return attrs
 
-from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -84,7 +83,17 @@ class UserSerializer(serializers.ModelSerializer):
             'last_name',
         ]
 
-class SchoolSerializer(serializers.Serializer):
+
+class SchoolSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = School
+        fields = [
+            "id", "school_id", "stop_id", "school_name", "opening_time", "closing_time",
+            "updated_by", "created_by", "updated_at"
+        ]
+
+
+class StopsSerializer(serializers.Serializer):
+    class Meta:
+        model = Stops
         fields = "__all__"
