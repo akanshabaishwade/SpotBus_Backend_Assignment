@@ -9,6 +9,9 @@ urlpatterns = [
     path('profile/', ProfileViewApi.as_view()),
     path('schoolapi/', SchoolApi.as_view({'get': 'list', 'post': 'create'})),
     path('stopsapi/', StopsApi.as_view({'get': 'list', 'post': 'create'})),
+    path('allschooldata/', allschooldata),
+    path('school/<str:school_id>/', schoolbyschool_id)
+
 
 
 ]

@@ -78,3 +78,25 @@ class SchoolApi(viewsets.ModelViewSet):
     def perform_update(self, serializer):
         user = self.request.user
         serializer.save(last_updated_by=user)
+
+
+@api_view(('GET',))
+def allschooldata(request):
+
+    school_data = School.objects.all().order_by('-updated_at').values()
+    data = {
+        'school_data':school_data
+    }
+    return Response(data)
+
+
+@api_view(('GET',))
+def schoolbyschool_id(request, school_id):
+
+    schoolbyschool_id = School.objects.filter(school_id=school_id).values()
+
+    data = {
+        'school_data':schoolbyschool_id,
+
+    }
+    return Response(data)
