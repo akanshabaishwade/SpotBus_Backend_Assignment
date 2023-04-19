@@ -5,7 +5,17 @@ from rest_framework import generics
 from rest_framework import viewsets
 from .models import *
 from .serializer import *
+from rest_framework import permissions
 
+from rest_framework import views
+
+from rest_framework.response import Response
+
+from rest_framework import status
+
+from .serializer import LoginSerializer
+
+# from . import serializers
 
 
 # Register API
@@ -22,12 +32,7 @@ class RegisterApi(generics.GenericAPIView):
         })
 
 
-from rest_framework import permissions
-from rest_framework import views
-from rest_framework.response import Response
-from rest_framework import status
-from .serializer import LoginSerializer
-# from . import serializers
+
 
 
 class LoginView(views.APIView):
