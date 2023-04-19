@@ -34,7 +34,7 @@ class Stops(models.Model):
 
 class School(models.Model):
     id = models.AutoField(primary_key=True)
-    school_id = models.CharField(max_length=30, unique=True)
+    school_id = models.CharField(max_length=30, null=True, blank=True)
     stop_id = models.ForeignKey(
         Stops,
         to_field="stop_id",

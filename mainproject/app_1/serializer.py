@@ -85,11 +85,14 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class SchoolSerializer(serializers.Serializer):
+    route_number = serializers.CharField(source="stop_id.route_number")
+    scheduled_start_time = serializers.CharField(source="stop_id.scheduled_start_time")
+
     class Meta:
         model = School
         fields = [
             "id", "school_id", "stop_id", "school_name", "opening_time", "closing_time",
-            "updated_by", "created_by", "updated_at"
+            "updated_by", "created_by", "updated_at", "route_number", "scheduled_start_time"
         ]
 
 

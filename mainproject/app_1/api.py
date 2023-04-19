@@ -100,3 +100,17 @@ def schoolbyschool_id(request, school_id):
 
     }
     return Response(data)
+
+@api_view(['POST'])
+def add_items(request):
+    item = SchoolSerializer(data=request.data)
+  
+    # validating for already existing data
+    if School.objects.filter(**request.data).exists():
+        raise serializers.ValidationError('This data already exists')
+  
+    if item.is_valid():
+        item.save()
+        return Response(item.data)
+    else:
+        return Response(status=status.HTTP_404_NOT_FOUND)
